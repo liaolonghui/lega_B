@@ -19,7 +19,7 @@ export interface CommonComponentProps {
   borderRadius: string;
   // boxShadow opacity
   boxShadow: string;
-  opacity: number;
+  opacity: string;
   // position
   position: string;
   left: string;
@@ -59,7 +59,7 @@ export const commonDefaultProps: CommonComponentProps = {
   borderRadius: '0',
   // boxShadow opacity
   boxShadow: '0 0 0 #000',
-  opacity: 1,
+  opacity: '1',
   // position
   position: 'absolute',
   left: '0',
@@ -68,7 +68,7 @@ export const commonDefaultProps: CommonComponentProps = {
 }
 
 // l-text
-export const textDefaultProps = {
+export const textDefaultProps: TextComponentProps = {
   text: '正文内容',
   fontSize: '14px',
   fontFamily: '',

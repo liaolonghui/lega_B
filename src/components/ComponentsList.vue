@@ -23,7 +23,7 @@ export default defineComponent({
   emits: ["on-item-click"],
   props: {
     list: {
-      type: Array as PropType<any[]>,
+      type: Array as PropType<{ [key: string]: any }[]>,
       required: true,
     },
   },

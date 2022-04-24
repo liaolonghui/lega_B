@@ -28,9 +28,9 @@ import { GlobalDataProps } from "@/store"
 import { defineComponent, computed } from "vue"
 import { useStore } from "vuex"
 import LText from "@/components/LText.vue" // 使用LText组件
-
-import { defaultTextTemplates } from "../defaultTemplates"
-import ComponentsList from "@/components/ComponentsList.vue"
+import { TextComponentProps } from "@/defaultProps"
+import { defaultTextTemplates } from "../defaultTemplates" // 要在左侧展示的模板的数据
+import ComponentsList from "@/components/ComponentsList.vue" // 左侧展示模板的组件
 
 export default defineComponent({
   components: {
@@ -41,7 +41,7 @@ export default defineComponent({
     const store = useStore<GlobalDataProps>()
     const components = computed(() => store.state.editor.components)
 
-    const addItem = (props: any) => {
+    const addItem = (props: TextComponentProps) => {
       store.commit("addComponent", props)
     }
 
