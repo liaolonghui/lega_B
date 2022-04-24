@@ -8,17 +8,23 @@
       <a-layout-content class="preview-container">
         <p>画布区域</p>
         <div class="preview-list" id="canvas-area">
-          <component
+          <editorWrap
             v-for="component in components"
             :key="component.id"
-            :is="component.name"
-            v-bind="component.props"
-          />
+            :id="component.id"
+            :active="component.id === currentElement?.id"
+            @setActive="setActive(component.id)"
+          >
+            <component :is="component.name" v-bind="component.props" />
+          </editorWrap>
         </div>
       </a-layout-content>
     </a-layout>
-    <a-layout-sider width="300" style="background: purple" class="setting">
+    <a-layout-sider width="300" style="background: #fff" class="setting">
       组件属性
+      <pre>
+        {{ currentElement?.props }}
+      </pre>
     </a-layout-sider>
   </a-layout>
 </template>
@@ -31,24 +37,39 @@ import LText from "@/components/LText.vue" // 使用LText组件
 import { TextComponentProps } from "@/defaultProps"
 import { defaultTextTemplates } from "../defaultTemplates" // 要在左侧展示的模板的数据
 import ComponentsList from "@/components/ComponentsList.vue" // 左侧展示模板的组件
+import editorWrap from "@/components/EditorWrap.vue"
+import { ComponentData } from "@/store/editor"
 
 export default defineComponent({
   components: {
     LText,
     ComponentsList,
+    editorWrap,
   },
   setup() {
     const store = useStore<GlobalDataProps>()
     const components = computed(() => store.state.editor.components)
 
-    const addItem = (props: TextComponentProps) => {
+    const addItem = (props: Partial<TextComponentProps>) => {
       store.commit("addComponent", props)
     }
+
+    // 设置当前正在编辑组件（id）
+    const setActive = (id: string) => {
+      store.commit("setActive", id)
+    }
+
+    // 获取当前编辑的组件
+    const currentElement = computed<ComponentData | null>(
+      () => store.getters.getCurrentElement
+    )
 
     return {
       components,
       defaultTextTemplates,
       addItem,
+      setActive,
+      currentElement,
     }
   },
 })
