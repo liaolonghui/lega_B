@@ -22,6 +22,10 @@
     </a-layout>
     <a-layout-sider width="300" style="background: #fff" class="setting">
       组件属性
+      <props-table
+        v-if="currentElement && currentElement.props"
+        :props="currentElement.props"
+      ></props-table>
       <pre>
         {{ currentElement?.props }}
       </pre>
@@ -39,12 +43,14 @@ import { defaultTextTemplates } from "../defaultTemplates" // 要在左侧展示
 import ComponentsList from "@/components/ComponentsList.vue" // 左侧展示模板的组件
 import editorWrap from "@/components/EditorWrap.vue"
 import { ComponentData } from "@/store/editor"
+import propsTable from "@/components/PropsTable.vue"
 
 export default defineComponent({
   components: {
     LText,
     ComponentsList,
     editorWrap,
+    propsTable,
   },
   setup() {
     const store = useStore<GlobalDataProps>()

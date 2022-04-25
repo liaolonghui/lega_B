@@ -10,6 +10,15 @@ import { useStore } from "vuex"
 import { GlobalDataProps } from "../store/index"
 import TemplateList from "../components/TemplateList.vue"
 
+// const props = withDefaults(
+//   defineProps<{
+//     id: string
+//   }>(),
+//   {
+//     id: "俺是默认值",
+//   }
+// )
+
 const store = useStore<GlobalDataProps>()
 const testData = computed(() => store.state.templates.data)
 </script>
