@@ -16,9 +16,9 @@ export interface ComponentData {
 
 // 测试数据（此时只有LText组件）
 const testComponents: ComponentData[] = [
-  { name: 'l-text', id: uuidv4(), props: { 'color': 'red', 'text': 'Hello World', tag: 'h2' } },
-  { name: 'l-text', id: uuidv4(), props: { 'color': '#00ff00', 'text': 'Hello World2', 'fontSize': '30px', 'fontWeight': 'bold' } },
-  { name: 'l-text', id: uuidv4(), props: { 'color': '#0000ff', 'text': 'Hello World3', tag: 'button', actionType: 'url', url: 'https://www.baidu.com' } },
+  { name: 'l-text', id: uuidv4(), props: { 'color': 'red', 'text': 'Hello World', tag: 'h2', fontFamily: '', textAlign: 'right', lineHeight: '1' } },
+  { name: 'l-text', id: uuidv4(), props: { 'color': '#00ff00', 'text': 'Hello World2', fontFamily: '', textAlign: 'center', 'fontSize': '30px', 'fontWeight': 'bold', lineHeight: '2' } },
+  { name: 'l-text', id: uuidv4(), props: { 'color': '#0000ff', 'text': 'Hello World3', tag: 'button', fontFamily: '', actionType: 'url', url: 'https://www.baidu.com' } },
 ]
 
 const editor: Module<EditorProps, GlobalDataProps> = {
@@ -37,6 +37,13 @@ const editor: Module<EditorProps, GlobalDataProps> = {
     },
     setActive(state, id: string) {
       state.currentElement = id
+    },
+    updateComponent(state, { key, value }) {
+      const updatedComponent = state.components.find(c => c.id === state.currentElement)
+
+      if (updatedComponent) {
+        updatedComponent.props[key as keyof TextComponentProps] = value
+      }
     }
   },
   getters: {
