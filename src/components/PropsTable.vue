@@ -16,7 +16,8 @@
               :is="val.subComponent"
               :value="option.value"
             >
-              {{ option.text }}
+              <!-- {{ option.text }} -->
+              <RenderVNode :VNode="option.text" />
             </component>
           </template>
         </component>
@@ -26,10 +27,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from "vue"
+import { defineComponent, PropType, computed, VNode } from "vue"
 import { TextComponentProps } from "@/defaultProps"
 import { mapPropsToForms } from "@/propsMap" // 属性到表单的映射
 import { reduce } from "lodash-es"
+import RenderVNode from "@/components/RenderVNode" // options选项的text可以是vnode，用该组件做桥梁渲染vnode
 
 interface FormProps {
   component: string;
@@ -37,7 +39,7 @@ interface FormProps {
   value: string;
   text?: string;
   extraProps?: { [key: string]: any };
-  options?: { text: string; value: any }[];
+  options?: { text: string | VNode; value: any }[];
   valueProp: string;
   eventName: string;
   events: { [key: string]: (e: any) => void };
@@ -52,6 +54,9 @@ export default defineComponent({
     },
   },
   emits: ["change"],
+  components: {
+    RenderVNode
+  },
   setup(props, context) {
     const finalProps = computed(() => {
       return reduce(
