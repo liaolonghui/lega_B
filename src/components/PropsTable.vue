@@ -32,6 +32,7 @@ import { TextComponentProps } from "@/defaultProps"
 import { mapPropsToForms } from "@/propsMap" // 属性到表单的映射
 import { reduce } from "lodash-es"
 import RenderVNode from "@/components/RenderVNode" // options选项的text可以是vnode，用该组件做桥梁渲染vnode
+import ColorPicker from "@/components/ColorPicker.vue"
 
 interface FormProps {
   component: string;
@@ -55,7 +56,8 @@ export default defineComponent({
   },
   emits: ["change"],
   components: {
-    RenderVNode
+    RenderVNode,
+    ColorPicker
   },
   setup(props, context) {
     const finalProps = computed(() => {
@@ -95,6 +97,7 @@ export default defineComponent({
 .props-item {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .props-item .props-description {
   width: 25%;

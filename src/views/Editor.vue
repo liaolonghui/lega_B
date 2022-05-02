@@ -55,7 +55,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore<GlobalDataProps>()
-    const components = computed(() => store.state.editor.components)
+    const components = computed(() => store.state.editor.components) // 画布要展示的所有组件
 
     const addItem = (props: Partial<TextComponentProps>) => {
       store.commit("addComponent", props)
